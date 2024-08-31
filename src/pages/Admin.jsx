@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Admin = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState({ name: "", price: "" });
 
@@ -27,6 +28,8 @@ const Admin = () => {
       setProducts(updatedProducts);
       setNewProduct({ name: "", price: "" });
       toast.success("Product added successfully");
+    } else {
+      toast.error("Please enter both name and price for the product");
     }
   };
 
@@ -37,12 +40,14 @@ const Admin = () => {
   };
 
   if (!user || !user.isAdmin) {
-    return <Navigate to="/" replace />;
+    toast.error("Unauthorized access");
+    return <Navigate to="/profile" replace />;
   }
 
   return (
     <div className="container mx-auto py-12">
       <h1 className="text-4xl font-bold mb-8">Admin Dashboard</h1>
+      <Button onClick={() => navigate('/profile')} className="mb-4">Back to Profile</Button>
       <Card className="mb-8">
         <CardHeader>
           <CardTitle>Add New Product</CardTitle>

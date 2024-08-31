@@ -34,6 +34,12 @@ export const navItems = [
     icon: <CreditCardIcon className="h-4 w-4" />,
     page: <Payment />,
   },
+  {
+    title: "Profile",
+    to: "/profile",
+    icon: <UserIcon className="h-4 w-4" />,
+    page: <Profile />,
+  },
 ];
 
 export const adminItem = {

@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Profile = () => {
   const { user, login, logout } = useAuth();
@@ -18,14 +19,17 @@ const Profile = () => {
     if (email === "admin@example.com" && password === "admin123") {
       login({ email, isAdmin: true });
       navigate("/admin");
+      toast.success("Logged in as admin");
     } else {
       // Regular user login
       login({ email });
+      toast.success("Logged in successfully");
     }
   };
 
   const handleLogout = () => {
     logout();
+    toast.success("Logged out successfully");
   };
 
   const mockOrders = [
@@ -44,7 +48,11 @@ const Profile = () => {
             </CardHeader>
             <CardContent>
               <p>Email: {user.email}</p>
+              <p>Role: {user.isAdmin ? 'Admin' : 'User'}</p>
               <Button onClick={handleLogout} className="mt-4">Logout</Button>
+              {user.isAdmin && (
+                <Button onClick={() => navigate('/admin')} className="mt-4 ml-4">Go to Admin Page</Button>
+              )}
             </CardContent>
           </Card>
           <Card>
