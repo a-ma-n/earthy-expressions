@@ -10,26 +10,26 @@ const Admin = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({ name: "", price: "" });
+  const [newProduct, setNewProduct] = useState({ name: "", price: "", quantity: 0 });
 
   useEffect(() => {
     // In a real app, fetch products from an API
     setProducts([
-      { id: 1, name: "Painted Bookmark", price: 150 },
-      { id: 2, name: "Vintage Letterpaper Set", price: 300 },
-      { id: 3, name: "Handmade Customized Envelope", price: 200 },
-      { id: 4, name: "Postcard Collection", price: 250 },
+      { id: 1, name: "Painted Bookmark", price: 150, quantity: 10 },
+      { id: 2, name: "Vintage Letterpaper Set", price: 300, quantity: 5 },
+      { id: 3, name: "Handmade Customized Envelope", price: 200, quantity: 15 },
+      { id: 4, name: "Postcard Collection", price: 250, quantity: 8 },
     ]);
   }, []);
 
   const handleAddProduct = () => {
-    if (newProduct.name && newProduct.price) {
+    if (newProduct.name && newProduct.price && newProduct.quantity > 0) {
       const updatedProducts = [...products, { ...newProduct, id: Date.now() }];
       setProducts(updatedProducts);
-      setNewProduct({ name: "", price: "" });
+      setNewProduct({ name: "", price: "", quantity: 0 });
       toast.success("Product added successfully");
     } else {
-      toast.error("Please enter both name and price for the product");
+      toast.error("Please enter name, price, and quantity for the product");
     }
   };
 
@@ -37,6 +37,14 @@ const Admin = () => {
     const updatedProducts = products.filter(product => product.id !== id);
     setProducts(updatedProducts);
     toast.success("Product removed successfully");
+  };
+
+  const handleUpdateQuantity = (id, newQuantity) => {
+    const updatedProducts = products.map(product => 
+      product.id === id ? { ...product, quantity: newQuantity } : product
+    );
+    setProducts(updatedProducts);
+    toast.success("Product quantity updated");
   };
 
   if (!user || !user.isAdmin) {
@@ -65,6 +73,12 @@ const Admin = () => {
               value={newProduct.price}
               onChange={(e) => setNewProduct({ ...newProduct, price: Number(e.target.value) })}
             />
+            <Input
+              type="number"
+              placeholder="Quantity"
+              value={newProduct.quantity}
+              onChange={(e) => setNewProduct({ ...newProduct, quantity: Number(e.target.value) })}
+            />
             <Button onClick={handleAddProduct}>Add Product</Button>
           </div>
         </CardContent>
@@ -76,8 +90,16 @@ const Admin = () => {
         <CardContent>
           {products.map((product) => (
             <div key={product.id} className="flex justify-between items-center mb-4">
-              <span>{product.name} - ₹{product.price}</span>
-              <Button variant="destructive" onClick={() => handleRemoveProduct(product.id)}>Remove</Button>
+              <span>{product.name} - ₹{product.price} - Quantity: {product.quantity}</span>
+              <div>
+                <Input
+                  type="number"
+                  value={product.quantity}
+                  onChange={(e) => handleUpdateQuantity(product.id, Number(e.target.value))}
+                  className="w-20 mr-2"
+                />
+                <Button variant="destructive" onClick={() => handleRemoveProduct(product.id)}>Remove</Button>
+              </div>
             </div>
           ))}
         </CardContent>

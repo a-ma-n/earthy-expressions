@@ -4,9 +4,9 @@ import { useCart } from "@/contexts/CartContext";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart, updateQuantity } = useCart();
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div className="container mx-auto py-12">
@@ -22,9 +22,25 @@ const Cart = () => {
                   <CardTitle>{item.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-bold">₹{item.price}</p>
+                  <p className="text-2xl font-bold">₹{item.price} x {item.quantity}</p>
+                  <p className="text-lg">Subtotal: ₹{item.price * item.quantity}</p>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="flex justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                    >
+                      -
+                    </Button>
+                    <span>{item.quantity}</span>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    >
+                      +
+                    </Button>
+                  </div>
                   <Button variant="destructive" onClick={() => removeFromCart(item.id)}>
                     Remove
                   </Button>
