@@ -4,16 +4,24 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user, login, logout } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // In a real app, you would validate credentials here
-    login({ email });
+    // Check if the credentials are for admin
+    if (email === "admin@example.com" && password === "admin123") {
+      login({ email, isAdmin: true });
+      navigate("/admin");
+    } else {
+      // Regular user login
+      login({ email });
+    }
   };
 
   const handleLogout = () => {

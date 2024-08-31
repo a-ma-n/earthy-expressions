@@ -29,21 +29,16 @@ export const navItems = [
     page: <Cart />,
   },
   {
-    title: "Profile",
-    to: "/profile",
-    icon: <UserIcon className="h-4 w-4" />,
-    page: <Profile />,
-  },
-  {
     title: "Payment",
     to: "/payment",
     icon: <CreditCardIcon className="h-4 w-4" />,
     page: <Payment />,
   },
-  {
-    title: "Admin",
-    to: "/admin",
-    icon: <Settings className="h-4 w-4" />,
-    page: <Admin />,
-  },
 ];
+
+export const adminItem = {
+  title: "Admin",
+  to: "/admin",
+  icon: <Settings className="h-4 w-4" />,
+  page: <Admin />,
+};

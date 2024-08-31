@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Menu, X } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
-import { navItems } from "@/nav-items";
+import { navItems, adminItem } from "@/nav-items";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
@@ -29,9 +29,10 @@ const Navbar = () => {
             </Link>
           ))}
           {user && user.isAdmin && (
-            <Link to="/admin">
+            <Link to={adminItem.to}>
               <Button variant="ghost" className="text-earth-100 hover:bg-earth-700">
-                Admin
+                {adminItem.icon}
+                <span className="ml-2">{adminItem.title}</span>
               </Button>
             </Link>
           )}
@@ -59,9 +60,10 @@ const Navbar = () => {
             </Link>
           ))}
           {user && user.isAdmin && (
-            <Link to="/admin" onClick={toggleMenu}>
+            <Link to={adminItem.to} onClick={toggleMenu}>
               <Button variant="ghost" className="text-earth-100 w-full justify-start mb-2 hover:bg-earth-700">
-                Admin
+                {adminItem.icon}
+                <span className="ml-2">{adminItem.title}</span>
               </Button>
             </Link>
           )}
