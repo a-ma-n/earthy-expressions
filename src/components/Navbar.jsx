@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Menu, X } from "lucide-react";
@@ -17,8 +18,7 @@ const Navbar = () => {
     <nav className="bg-earth-800 text-earth-100 p-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center">
-          <img src="/logo.png" alt="Shades of Spring Logo" className="h-10 w-10 mr-2" />
-          <span className="text-2xl font-bold">Shades of Spring</span>
+          <img src="/logo.png" alt="Shades of Spring Logo" className="h-16 w-auto" />
         </Link>
         <div className="hidden md:flex items-center space-x-4">
           {navItems.map((item) => (
