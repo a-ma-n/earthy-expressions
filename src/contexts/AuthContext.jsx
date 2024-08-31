@@ -8,7 +8,12 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const login = (userData) => {
-    setUser(userData);
+    // Check if the user is an admin (in a real app, this would be done server-side)
+    if (userData.email === "admin@example.com" && userData.password === "admin123") {
+      setUser({ ...userData, isAdmin: true });
+    } else {
+      setUser(userData);
+    }
   };
 
   const logout = () => {

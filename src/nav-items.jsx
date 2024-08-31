@@ -1,9 +1,10 @@
-import { HomeIcon, ShoppingBagIcon, UserIcon, CreditCardIcon, ShoppingCartIcon } from "lucide-react";
+import { HomeIcon, ShoppingBagIcon, UserIcon, CreditCardIcon, ShoppingCartIcon, Settings } from "lucide-react";
 import Index from "./pages/Index.jsx";
 import Products from "./pages/Products.jsx";
 import Profile from "./pages/Profile.jsx";
 import Payment from "./pages/Payment.jsx";
 import Cart from "./pages/Cart.jsx";
+import Admin from "./pages/Admin.jsx";
 
 /**
  * Central place for defining the navigation items. Used for navigation components and routing.
@@ -38,5 +39,11 @@ export const navItems = [
     to: "/payment",
     icon: <CreditCardIcon className="h-4 w-4" />,
     page: <Payment />,
+  },
+  {
+    title: "Admin",
+    to: "/admin",
+    icon: <Settings className="h-4 w-4" />,
+    page: <Admin />,
   },
 ];
