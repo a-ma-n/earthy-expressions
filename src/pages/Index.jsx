@@ -29,7 +29,7 @@ const Index = () => {
       <main className="container mx-auto py-12">
         <section className="mb-16">
           <h2 className="text-3xl font-semibold mb-6 flex items-center justify-center">
-            <Leaf className="mr-2" /> Our Creations
+            <Leaf className="mr-2" /> Our Eco-Friendly Creations
           </h2>
           <Carousel className="w-full max-w-xs mx-auto sm:max-w-sm md:max-w-md lg:max-w-lg">
             <CarouselContent>
