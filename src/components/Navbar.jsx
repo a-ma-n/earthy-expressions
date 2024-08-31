@@ -17,7 +17,7 @@ const Navbar = () => {
     <nav className="bg-earth-800 text-earth-100 p-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center">
-          <img src="/logo.png" alt="Shades of Spring Logo" className="h-16 w-auto" />
+          <img src="/shades-of-spring-logo.png" alt="Shades of Spring Logo" className="h-20 w-auto" />
         </Link>
         <div className="hidden md:flex items-center space-x-4">
           {navItems.map((item) => (
