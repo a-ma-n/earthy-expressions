@@ -38,29 +38,43 @@ const Payment = () => {
           </div>
         </CardContent>
       </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Enter UPI Details</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handlePayment} className="space-y-4">
-            <div>
-              <Label htmlFor="upi-id">UPI ID</Label>
-              <Input
-                id="upi-id"
-                value={upiId}
-                onChange={(e) => setUpiId(e.target.value)}
-                placeholder="yourname@upi"
-              />
-            </div>
-            <div>
-              <Label htmlFor="amount">Amount (₹)</Label>
-              <Input id="amount" type="number" value={total} readOnly />
-            </div>
-            <Button type="submit">Proceed to Pay</Button>
-          </form>
-        </CardContent>
-      </Card>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <Card>
+          <CardHeader>
+            <CardTitle>Enter UPI Details</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handlePayment} className="space-y-4">
+              <div>
+                <Label htmlFor="upi-id">UPI ID</Label>
+                <Input
+                  id="upi-id"
+                  value={upiId}
+                  onChange={(e) => setUpiId(e.target.value)}
+                  placeholder="yourname@upi"
+                />
+              </div>
+              <div>
+                <Label htmlFor="amount">Amount (₹)</Label>
+                <Input id="amount" type="number" value={total} readOnly />
+              </div>
+              <Button type="submit">Proceed to Pay</Button>
+            </form>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Scan QR Code to Pay</CardTitle>
+          </CardHeader>
+          <CardContent className="flex justify-center">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg"
+              alt="UPI QR Code"
+              className="w-64 h-64"
+            />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
