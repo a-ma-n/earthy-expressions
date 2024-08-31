@@ -5,10 +5,13 @@ import { Label } from "@/components/ui/label";
 import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
 import { toast } from "sonner";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const Payment = () => {
   const { cart, clearCart } = useCart();
   const [upiId, setUpiId] = useState("");
+  const [email, setEmail] = useState("");
 
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
@@ -16,13 +19,24 @@ const Payment = () => {
     e.preventDefault();
     // In a real app, you would process the payment here
     toast.success("Payment successful!");
+    generateReceipt();
     clearCart();
+  };
+
+  const generateReceipt = () => {
+    const receipt = document.getElementById("receipt");
+    html2canvas(receipt).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "PNG", 0, 0);
+      pdf.save("receipt.pdf");
+    });
   };
 
   return (
     <div className="container mx-auto py-12">
       <h1 className="text-4xl font-bold mb-8">UPI Payment</h1>
-      <Card className="mb-8">
+      <Card className="mb-8" id="receipt">
         <CardHeader>
           <CardTitle>Order Summary</CardTitle>
         </CardHeader>
@@ -41,7 +55,7 @@ const Payment = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card>
           <CardHeader>
-            <CardTitle>Enter UPI Details</CardTitle>
+            <CardTitle>Enter Payment Details</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handlePayment} className="space-y-4">
@@ -52,6 +66,16 @@ const Payment = () => {
                   value={upiId}
                   onChange={(e) => setUpiId(e.target.value)}
                   placeholder="yourname@upi"
+                />
+              </div>
+              <div>
+                <Label htmlFor="email">Email (for receipt)</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
                 />
               </div>
               <div>

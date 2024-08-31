@@ -8,23 +8,23 @@ import { toast } from "sonner";
 const Admin = () => {
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({ name: "", price: "" });
+  const [newProduct, setNewProduct] = useState({ name: "", price: "", image: "" });
 
   useEffect(() => {
     // In a real app, fetch products from an API
     setProducts([
-      { id: 1, name: "Painted Bookmark", price: 150 },
-      { id: 2, name: "Vintage Letterpaper Set", price: 300 },
-      { id: 3, name: "Handmade Customized Envelope", price: 200 },
-      { id: 4, name: "Postcard Collection", price: 250 },
+      { id: 1, name: "Painted Bookmark", price: 150, image: "https://source.unsplash.com/random/300x200?bookmark" },
+      { id: 2, name: "Vintage Letterpaper Set", price: 300, image: "https://source.unsplash.com/random/300x200?vintage+paper" },
+      { id: 3, name: "Handmade Customized Envelope", price: 200, image: "https://source.unsplash.com/random/300x200?envelope" },
+      { id: 4, name: "Postcard Collection", price: 250, image: "https://source.unsplash.com/random/300x200?postcard" },
     ]);
   }, []);
 
   const handleAddProduct = () => {
-    if (newProduct.name && newProduct.price) {
+    if (newProduct.name && newProduct.price && newProduct.image) {
       const updatedProducts = [...products, { ...newProduct, id: Date.now() }];
       setProducts(updatedProducts);
-      setNewProduct({ name: "", price: "" });
+      setNewProduct({ name: "", price: "", image: "" });
       toast.success("Product added successfully");
     }
   };
@@ -47,7 +47,7 @@ const Admin = () => {
           <CardTitle>Add New Product</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex space-x-4">
+          <div className="flex flex-col space-y-4">
             <Input
               placeholder="Product Name"
               value={newProduct.name}
@@ -58,6 +58,11 @@ const Admin = () => {
               placeholder="Price"
               value={newProduct.price}
               onChange={(e) => setNewProduct({ ...newProduct, price: Number(e.target.value) })}
+            />
+            <Input
+              placeholder="Image URL"
+              value={newProduct.image}
+              onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
             />
             <Button onClick={handleAddProduct}>Add Product</Button>
           </div>
@@ -70,7 +75,10 @@ const Admin = () => {
         <CardContent>
           {products.map((product) => (
             <div key={product.id} className="flex justify-between items-center mb-4">
-              <span>{product.name} - ₹{product.price}</span>
+              <div className="flex items-center">
+                <img src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded mr-4" />
+                <span>{product.name} - ₹{product.price}</span>
+              </div>
               <Button variant="destructive" onClick={() => handleRemoveProduct(product.id)}>Remove</Button>
             </div>
           ))}
